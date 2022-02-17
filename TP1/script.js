@@ -1,15 +1,20 @@
-const container = document.querySelector('.container')
+const notesdiv = document.querySelector('#notesdiv');
 const addNew = document.querySelector('#addnew');
 
 //=====================================================================
 
 function createNote() {
+    
     var newNote = document.createElement("div");
     newNote.className = "note";
 
     const entete = document.createElement("div");
 
     entete.className = "entete";
+
+    entete.addEventListener('dblclick',function () {
+        text.style.display = "none";
+    })
 
 
     const text = document.createElement("textarea");
@@ -25,7 +30,7 @@ function createNote() {
     const img1 = document.createElement("img");
     const img2 = document.createElement("img");
 
-    img1.setAttribute("src", "real edit.png");
+    img1.setAttribute("src", "edit.png");
     img2.setAttribute("src", "trash.png");
 
 
@@ -60,7 +65,7 @@ function createNote() {
     newNote.appendChild(entete);
     newNote.appendChild(text);
 
-    container.appendChild(newNote);
+    notesdiv.appendChild(newNote);
     console.log("finished!")
 
 }
@@ -70,3 +75,4 @@ function createNote() {
 addNew.addEventListener('click', function() {
     createNote();
 });
+

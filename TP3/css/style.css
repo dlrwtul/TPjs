@@ -1,0 +1,67 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    border: 1px solid black;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.generator {
+    padding: 1%;
+    background-color: rgb(70,28,109);
+    width: 25vw;
+}
+
+.champ {
+    padding: 3%;
+    background-color: rgb(46,12,80);
+    color: white;
+    height: 52vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.output {
+    font-size: 1.5em;
+    background-color: rgb(70,28,109);
+    color: white;
+    padding: 5% 0 5% 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#copy {
+    border: 1px solid black;
+    font-size: small;
+    height: 2vh;
+    background-color: white;
+    color: black;
+}
+
+
+.inputs {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.15em;
+    margin: 5% 0;
+}
+
+
+#btn {
+    cursor: pointer;
+    border: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    background-color: rgb(237,181,0);
+    color: rgb(70,28,109);
+    padding: 4% 2%;
+}

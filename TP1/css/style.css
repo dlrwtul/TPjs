@@ -11,29 +11,41 @@ body {
     background-color: rgb(123, 219, 243);
     min-height: 100vh;
     padding: 1%;
+    display: grid;
+    grid-template-rows: 7vh auto;
 }
 
-.container button {
+#btndiv {
+    grid-row: 1/2;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#btndiv button {
     cursor: pointer;
-    position: absolute;
     border-radius: 5px;
+    font-weight: bold;
     border: none;
-    top: 0;
-    right: 0;
-    margin: 1%;
     background-color: rgb(158, 201, 98);
     color: white;
     padding: 0.5% 2%;
+    height: 5vh;
 }
 
-.container button:hover {
+#btndiv button:hover {
     color: rgb(158, 201, 98);
     background-color: white;
 }
 
+#notesdiv {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+
+}
+
 .note {
-    height: 90vh;
-    width: 32vw;
+    height: 45vh;
+    width: 15vw;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -53,6 +65,7 @@ body {
 
 .entete img {
     width: 1.5em;
+    cursor: pointer;
 }
 
 .entete span {
