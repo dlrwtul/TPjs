@@ -1,6 +1,7 @@
 const champ = document.querySelector(".champ")
-const password = document.querySelector('#text');
-const btnCopy = document.querySelector('#copy');
+const password = document.querySelector('#password');
+password.setAttribute("readonly","")
+const btnCopy = document.querySelector('#btn_copy');
 const taille = document.getElementById('taille');
 const maj = document.getElementById('maj');
 const min = document.getElementById('min');
@@ -25,17 +26,18 @@ const MAX = 20
 
 //===================================================================
 
-function is_required() {
-    if (taille.value === "") {
-        tailleerror.style.visibility = "visible";
-    }
-}
-
 function message_error() {
     if (parseInt(taille.value) < MIN) {
         tailleerror.innerHTML = `la taille minimale est ${MIN} !`
-    }if (parseInt(taille.value) > MAX) {
+    }
+    if (parseInt(taille.value) > MAX) {
         tailleerror.innerHTML = `la taille maximale est ${MAX} !`
+    }
+    if (taille.value === "") {
+        tailleerror.style.visibility = "visible";
+    } 
+    if (!Number.isInteger(taille.value)) {
+        tailleerror.innerHTML = `Veuillez entrer un nombre compris entre ${MIN} et ${MAX} !`
     }
 }
 
@@ -60,8 +62,10 @@ function are_checked() {
         }
     });
     if (checkeds.length === 0) {
-        console.log("0 checked");
         error.style.visibility = "visible";
+    }else {
+        genere.disabled = false;
+        error.style.visibility = "hidden";
     }
 
 }
@@ -73,31 +77,41 @@ function password_generator() {
       passwordGenered += chars.charAt(Math.floor(Math.random() * 
         Length));
     }
-
 }
 
 //===================================================================
-champ.addEventListener('click',function () {
+champ.addEventListener("mouseover",function () {
+    checkeds = [];
     are_checked();
-    if (parseInt(taille.value) >= 5 && parseInt(taille.value) <= 20) {
-        console.log("taillebon");
-        tailleerror.style.visibility = "hidden";
-    } 
-    if (checkeds.length !== 0 ) {
-        console.log("checked");
-        genere.disabled = false;
-        error.style.visibility = "hidden";
-    }  
     message_error();
-    is_required();
+    if (parseInt(taille.value) >= 5 && parseInt(taille.value) <= 20) {
+        tailleerror.style.visibility = "hidden";
+    }else {
+        btnCopy.style.visibility = "hidden";
+        password.innerHTML = "";
+        tailleerror.style.visibility = "visible";
+    }
 })
 
 
 
 genere.addEventListener('click',function () {
-    passwordGenered = "";
-    btnCopy.style.visibility = "visible";
-    password_generator();
-    password.innerHTML = passwordGenered;
-    console.log(passwordGenered)
+    
+    if (parseInt(taille.value) >= 5 && parseInt(taille.value) <= 20 && checkeds.length !== 0) {
+        passwordGenered = "";
+        btnCopy.style.visibility = "visible";
+        password_generator();
+        password.value = passwordGenered;
+        btnCopy.addEventListener('click',function () {
+            password.select();
+            navigator.clipboard.writeText(password.value);
+            btnCopy.innerHTML = "copied"
+            setTimeout(function () {
+                btnCopy.innerHTML = "copy"
+            },3000);
+        })
+    } else {
+        are_checked();
+        message_error();
+    }
 })

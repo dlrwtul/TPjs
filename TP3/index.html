@@ -11,14 +11,14 @@
     <div class="container">
         <div class="generator">
             <div class="champ">
-                <div class="output"><div id="text"></div><div id="copy"><button>copy</button></div></div>
+                <div class="output"><div id="text"><input type="text" id="password"></div><div id="copy"><button id="btn_copy">copy</button></div></div>
                 <div class="inputs"><label for="taille">Longueur du password</label><input style="width: 2vw;height: 2.5vh;" name="taille" id="taille" type="text"></div>
                 <small class="tailleerror">La taille est obligatoire !</small>
                 <div class="inputs"><label for="maj">Contient des Lettres Majuscules</label><input type="checkbox" name="maj" id="maj"></div>
                 <div class="inputs"><label for="min">Contient des Lettres Minuscules</label><input type="checkbox" name="min" id="min"></div>
                 <div class="inputs"><label for="nbr">Contient des Nombres</label><input type="checkbox" name="nbr" id="nbr"></div>
                 <div class="inputs"><label for="spe">Contient des Caracteres Speciaux</label><input type="checkbox" name="spe" id="spe"></div>
-                <small class="error">Cochez en au moins une!</small>
+                <small class="error">Cochez au moins une case !</small>
                 <input type="button" id="btn" value="Generer Le Mot de Passe" disabled>
             </div>
             <script src="script.js"></script>
