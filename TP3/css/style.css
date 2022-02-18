@@ -32,21 +32,32 @@ body {
 
 .output {
     font-size: 1.5em;
+    height: 10vh;
     background-color: rgb(70,28,109);
     color: white;
-    padding: 5% 0 5% 5%;
     display: flex;
     justify-content: space-between;
 }
 
-#copy {
-    border: 1px solid black;
-    font-size: small;
-    height: 2vh;
-    background-color: white;
-    color: black;
+#text {
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
 }
 
+.text.error {
+    
+}
+
+#copy {
+    font-size: small;
+    visibility: hidden;
+}
+
+#copy button {
+    border: none;
+    cursor: pointer;
+}
 
 .inputs {
     display: flex;
@@ -55,6 +66,10 @@ body {
     margin: 5% 0;
 }
 
+small {
+    color: red;
+    visibility: hidden;
+}
 
 #btn {
     cursor: pointer;

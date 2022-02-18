@@ -13,15 +13,17 @@ function createNote() {
     entete.className = "entete";
 
     entete.addEventListener('dblclick',function () {
-        text.style.display = "none";
+        if (text.style.display !== "none") {
+            text.style.display = "none";
+        } else {
+            text.style.display = "block";
+        }
     })
 
 
     const text = document.createElement("textarea");
 
-    text.setAttribute("cols", "30");
-    text.setAttribute("rows", "55");
-    text.setAttribute("readonly", "");
+    /* text.setAttribute("readonly", ""); */
 
 
     var span1 = document.createElement("span");
@@ -36,18 +38,18 @@ function createNote() {
 
     img1.addEventListener('click', function() {
         var textes = text.value;
-        text.removeAttribute("readonly");
-        text.focus();
+        text.setAttribute("readonly","");
+        /* text.focus(); */
         text.style.backgroundColor =
             "rgb(230, 240, 243)"
         console.log('edited');
     })
 
-    text.addEventListener('blur', function() {
+    /* text.addEventListener('blur', function() {
         text.setAttribute("readonly", "");
         text.style.backgroundColor = "";
         console.log('blured');
-    })
+    }) */
 
 
     span1.appendChild(img1);

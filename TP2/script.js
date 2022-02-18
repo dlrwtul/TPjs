@@ -4,7 +4,120 @@ const btnDroite = document.querySelector('#btn_droite');
 const btnGauche = document.querySelector('#btn_gauche');
 
 var items = ["Mon premier","Mon deuxieme","Mon troisieme","Mon quatrieme"];
+var selected = [];
 var items2 = [];
+var selected2 = [];
+//===================================================================================
+
+function affiche_element(items,parent,selected,btn) {
+    items.forEach(element => {
+        const paragraph = document.createElement('p');
+        paragraph.innerHTML = element;
+        paragraph.addEventListener('click',function () {
+            if (paragraph.style.backgroundColor !== "blue") {
+                selected.push(element);
+                paragraph.style.backgroundColor = "blue";
+                paragraph.style.color = "white";
+            } else {
+                if (selected.includes(element)) {
+                    selected.splice(selected.indexOf(element),1);
+                }
+                paragraph.style.backgroundColor = "white";
+                paragraph.style.color = "black";
+            }
+            dis_en_able(selected,btn)
+        })
+        parent.appendChild(paragraph);
+    });
+}
+
+function dis_en_able(selected,btn) {
+    if (selected.length !== 0) {
+        btn.disabled = false;
+    } else {
+        btn.disabled = true;
+    }
+}
+
+function delete_elements(selected,items,parent) {
+    selected.forEach(element => {
+        items.splice(items.indexOf(element),1)
+        var elements = parent.childNodes;
+        elements.forEach(element => {
+            if (selected.includes(element.innerHTML)) {
+                parent.removeChild(element)
+            }
+        });
+    });
+}
+
+function move_droite() {
+    droite.innerHTML = "";
+    items2 = items2.concat(selected);
+    items2 = [...new Set(items2)];
+    delete_elements(selected,items,gauche);
+    items.forEach(element => {
+        if (!selected.includes(element)) {
+            selected.splice(selected.indexOf(element),1)
+        }
+    });
+    affiche_element(items2,droite,selected2,btnGauche);
+    btnDroite.disabled = true;
+}
+
+function move_gauche() {
+    gauche.innerHTML = "";
+    items = items.concat(selected2);
+    items = [...new Set(items)];
+    delete_elements(selected2,items2,droite);
+    items2.forEach(element => {
+        if (!selected2.includes(element)) {
+            selected2.splice(selected2.indexOf(element),1)
+        }
+    });
+    affiche_element(items,gauche,selected,btnDroite);
+    btnGauche.disabled = true;
+}
+
+//===================================================================================
+affiche_element(items,gauche,selected,btnDroite);
+btnDroite.addEventListener('click',function () {
+    move_droite();
+})
+
+btnGauche.addEventListener('click',function () {
+    move_gauche();
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* var items2 = [];
 var selected = [];
 var selected2 = [];
 
@@ -35,9 +148,9 @@ function redirect_droite() {
 
             var elements = document.querySelectorAll('.pG');
             for (let a = 0; a < elements.length; a++) {
-                var pancien = elements[a];
-                if (pancien.innerHTML === element) {
-                    gauche.removeChild(pancien);
+                var pToDelete = elements[a];
+                if (pToDelete.innerHTML === element) {
+                    gauche.removeChild(pToDelete);
                     selected.splice(selected.indexOf(element),1);
                     items.splice(items.indexOf(element),1)
                 }
@@ -74,9 +187,9 @@ function redirect_gauche() {
 
             var elements = document.querySelectorAll('.pD');
             for (let a = 0; a < elements.length; a++) {
-                var pancien = elements[a];
-                if (pancien.innerHTML === element) {
-                    droite.removeChild(pancien);
+                var pToDelete = elements[a];
+                if (pToDelete.innerHTML === element) {
+                    droite.removeChild(pToDelete);
                     selected2.splice(selected2.indexOf(element),1);
                     items2.splice(items2.indexOf(element),1)
 
@@ -112,4 +225,4 @@ btnDroite.addEventListener('click',function () {
 
 btnGauche.addEventListener('click',function () {
     redirect_gauche();
-})
+}) */
