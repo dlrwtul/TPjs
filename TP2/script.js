@@ -1,228 +1,139 @@
 const gauche = document.querySelector('.gauche');
 const droite = document.querySelector('.droite');
-const btnDroite = document.querySelector('#btn_droite');
-const btnGauche = document.querySelector('#btn_gauche');
+var pG = gauche.childNodes;
+var pD = droite.childNodes;
+const btnDroite = document.getElementById('btn_droite');
+const btnGauche = document.getElementById('btn_gauche');
 
-var items = ["Mon premier","Mon deuxieme","Mon troisieme","Mon quatrieme"];
-var selected = [];
-var items2 = [];
-var selected2 = [];
-//===================================================================================
+console.log(pD);
 
-function affiche_element(items,parent,selected,btn) {
-    items.forEach(element => {
-        const paragraph = document.createElement('p');
+
+var itemsGauche = ["Mon premier","Mon deuxieme","Mon troisieme","Mon quatrieme"];
+var itemsDroite = [];
+var compteurG = 0;
+var compteurD = 0;
+//=====================================================
+
+function affichage_gauche() {
+    itemsGauche.forEach(element => {
+        var paragraph = document.createElement("p");
         paragraph.innerHTML = element;
-        paragraph.addEventListener('click',function () {
-            if (paragraph.style.backgroundColor !== "blue") {
-                selected.push(element);
-                paragraph.style.backgroundColor = "blue";
-                paragraph.style.color = "white";
-            } else {
-                if (selected.includes(element)) {
-                    selected.splice(selected.indexOf(element),1);
+        paragraph.addEventListener('click' , function () {
+            if (btnGauche.disabled === true) {
+                if (paragraph.style.backgroundColor !== "blue") {
+                    paragraph.style.backgroundColor = "blue";
+                    paragraph.style.color = "white";
+                    compteurG++
+                } else {
+                    paragraph.style.backgroundColor = "white";
+                    paragraph.style.color = "black";
+                    compteurG--;
                 }
-                paragraph.style.backgroundColor = "white";
-                paragraph.style.color = "black";
+                if (compteurG !== 0) {
+                    btnDroite.removeAttribute("disabled")
+                } else {
+                    btnDroite.setAttribute("disabled","");
+                }
             }
-            dis_en_able(selected,btn)
+            
         })
-        parent.appendChild(paragraph);
-    });
+        gauche.appendChild(paragraph);
+    }); 
+    
 }
 
-function dis_en_able(selected,btn) {
-    if (selected.length !== 0) {
-        btn.disabled = false;
-    } else {
-        btn.disabled = true;
-    }
-}
-
-function delete_elements(selected,items,parent) {
-    selected.forEach(element => {
-        items.splice(items.indexOf(element),1)
-        var elements = parent.childNodes;
-        elements.forEach(element => {
-            if (selected.includes(element.innerHTML)) {
-                parent.removeChild(element)
+function affichage_droite() {
+    itemsDroite.forEach(element => {
+        var paragraph = document.createElement("p");
+        paragraph.innerHTML = element;
+        paragraph.addEventListener('click' , function () {
+            if (btnDroite.disabled === true) {
+                if (paragraph.style.backgroundColor !== "blue") {
+                    paragraph.style.backgroundColor = "blue";
+                    paragraph.style.color = "white";
+                    compteurD++
+                } else {
+                    paragraph.style.backgroundColor = "white";
+                    paragraph.style.color = "black";
+                    compteurD--;
+                }
+                if (compteurD !== 0) {
+                    btnGauche.removeAttribute("disabled")
+                } else {
+                    btnGauche.setAttribute("disabled","");
+                } 
             }
-        });
-    });
+            
+        })
+        droite.appendChild(paragraph);
+    }); 
+    
 }
 
 function move_droite() {
-    droite.innerHTML = "";
-    items2 = items2.concat(selected);
-    items2 = [...new Set(items2)];
-    delete_elements(selected,items,gauche);
-    items.forEach(element => {
-        if (!selected.includes(element)) {
-            selected.splice(selected.indexOf(element),1)
+    if (compteurG > 0) {
+        for (let index = 0; index < pG.length; index++) {
+            const element = pG[index];
+            if (element.style.backgroundColor === "blue") {
+                itemsDroite.push(element.innerHTML);
+                itemsGauche.splice(itemsGauche.indexOf(element.innerHTML),1);
+                element.parentNode.removeChild(element);
+                index--;
+            }
         }
-    });
-    affiche_element(items2,droite,selected2,btnGauche);
-    btnDroite.disabled = true;
+        if (pD.length !== 0) {
+            pD.forEach(paragraphautre => {
+                if (!itemsDroite.includes(paragraphautre.innerHTML)) {
+                    itemsDroite.push(paragraphautre.innerHTML);
+                }
+            });
+            droite.innerHTML = "";
+        }
+    }
+    compteurG = 0;
+    
 }
+
 
 function move_gauche() {
-    gauche.innerHTML = "";
-    items = items.concat(selected2);
-    items = [...new Set(items)];
-    delete_elements(selected2,items2,droite);
-    items2.forEach(element => {
-        if (!selected2.includes(element)) {
-            selected2.splice(selected2.indexOf(element),1)
+    if (compteurD > 0) {
+        for (let index = 0; index < pD.length; index++) {
+            const element = pD[index];
+            if (element.style.backgroundColor === "blue") {
+                itemsGauche.push(element.innerHTML);
+                itemsDroite.splice(itemsDroite.indexOf(element.innerHTML),1);
+                element.parentNode.removeChild(element);
+                index--;
+            }
         }
-    });
-    affiche_element(items,gauche,selected,btnDroite);
-    btnGauche.disabled = true;
+        if (pG.length !== 0) {
+            pG.forEach(paragraphautre => {
+                if (!itemsGauche.includes(paragraphautre.innerHTML)) {
+                    itemsGauche.push(paragraphautre.innerHTML);
+                }
+            });
+            gauche.innerHTML = "";
+        }
+
+    }
+    compteurD = 0;
 }
 
-//===================================================================================
-affiche_element(items,gauche,selected,btnDroite);
-btnDroite.addEventListener('click',function () {
+
+
+affichage_gauche();
+//===============================================
+
+btnDroite.addEventListener('click' , function () {
     move_droite();
-})
+    affichage_droite();
+    btnDroite.setAttribute("disabled","");
 
-btnGauche.addEventListener('click',function () {
-    move_gauche();
-})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* var items2 = [];
-var selected = [];
-var selected2 = [];
-
-//===================================================================================
-function div_gauche() {
-    items.forEach(element => {
-        var paragraph = document.createElement('p');
-        paragraph.innerHTML = element;
-        paragraph.setAttribute("class",`pG`);
-        paragraph.addEventListener('click',function () {
-            paragraph.style.backgroundColor = "blue";
-            paragraph.style.color = "white";
-            btnDroite.disabled = false;
-            selected.push(element);
-        })
-        gauche.appendChild(paragraph);
-    });
-}
-
-
-function redirect_droite() {
-    for (let index = 0; index < items.length; index++) {
-        const element = items[index];
-        if (selected.indexOf(element) !== -1) {
-            items2.push(element);
-
-            //delete elements after merge
-
-            var elements = document.querySelectorAll('.pG');
-            for (let a = 0; a < elements.length; a++) {
-                var pToDelete = elements[a];
-                if (pToDelete.innerHTML === element) {
-                    gauche.removeChild(pToDelete);
-                    selected.splice(selected.indexOf(element),1);
-                    items.splice(items.indexOf(element),1)
-                }
-            }
-        }
-        
-    }
-
-    droite.innerHTML = "";
-    items2.forEach(element => {
-        var paragraph = document.createElement('p');
-        paragraph.innerHTML = element;
-        paragraph.setAttribute("class",`pD`);
-        paragraph.addEventListener('click',function () {
-            paragraph.style.backgroundColor = "blue";
-            paragraph.style.color = "white";
-            btnGauche.disabled = false;
-            if (!selected2.includes(element)) {
-                selected2.push(element)
-            }
-        })
-        droite.appendChild(paragraph);
-    });
-}
-
-
-function redirect_gauche() {
-    for (let index = 0; index < items2.length; index++) {
-        const element = items2[index];
-        if (selected2.indexOf(element) !== -1) {
-            items.push(element);
-
-            //delete elements after merge
-
-            var elements = document.querySelectorAll('.pD');
-            for (let a = 0; a < elements.length; a++) {
-                var pToDelete = elements[a];
-                if (pToDelete.innerHTML === element) {
-                    droite.removeChild(pToDelete);
-                    selected2.splice(selected2.indexOf(element),1);
-                    items2.splice(items2.indexOf(element),1)
-
-                }
-            }
-        }
-        
-    }
-
-    gauche.innerHTML = "";
-    items.forEach(element => {
-        var paragraph = document.createElement('p');
-        paragraph.innerHTML = element;
-        paragraph.setAttribute("class",`pG`);
-        paragraph.addEventListener('click',function () {
-            paragraph.style.backgroundColor = "blue";
-            paragraph.style.color = "white";
-            btnDroite.disabled = false;
-            if (!selected.includes(element)) {
-                selected.push(element)
-            }
-        })
-        gauche.appendChild(paragraph);
-    });
-}
-
-
-//===================================================================================
-div_gauche();
-btnDroite.addEventListener('click',function () {
-    redirect_droite();
 });
 
-btnGauche.addEventListener('click',function () {
-    redirect_gauche();
-}) */
+btnGauche.addEventListener('click' , function () {
+    move_gauche();
+    affichage_gauche();
+    btnGauche.setAttribute("disabled","");
+
+});
