@@ -88,6 +88,16 @@ function remove_check() {
     });
 }
 
+function score_plus() {
+    if (i>= 0 && i < questionnaires.length) {
+        var questionnaire = questionnaires[i];
+        if (userreponse === questionnaire['correct']) {
+            score++;
+        }
+    }
+    
+}
+
 
 
 affiche_questionnaire(i);
@@ -99,15 +109,13 @@ divquestionnaire.addEventListener('mouseover',function () {
 
 suivant.addEventListener('click',function () {
     suivant.setAttribute("disabled","");
+    score_plus();
     i++;
     if (i < questionnaires.length) {
-        var questionnaire = questionnaires[i];
-        if (userreponse === questionnaire['correct']) {
-            score++;
-        }
         userreponse = "";
         remove_check();
         affiche_questionnaire(i);
+        console.log(score);
     }else {
         suivant.innerHTML = "Rejouer"
         radio.style.display = "none";
